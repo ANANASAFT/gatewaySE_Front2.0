@@ -5,19 +5,21 @@
         <MyHeader/>
       </Header>
       <Layout :style="{padding: '0 10px'}">
-        <MyBreadcrumb/>
-        <Content :style="{padding: '24px', minHeight: '700px',maxHeight:'800px', background: '#fff'}">
+<!--        <MyBreadcrumb/>-->
+        <div :style="{padding: '24px', minHeight: '700px',maxHeight:'800px', background: '#fff'}">
           <Layout>
             <Sider hide-trigger :style="{background: '#fff'}">
-                <my-steps/>
+                <my-steps :current-step="currentStep"/>
             </Sider>
               <Layout :style="{padding: '24px 24px'}">
-                  <Content :style="{padding: '24px', minHeight: '700px', background: '#fff'}">
-                      Content
-                  </Content>
+                  <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
+                      <select-sensor-function :style="{display:this.currentStep!=0?'none':'block'}"/>
+                    <Button v-if="this.currentStep>0" style="position:absolute; bottom: 5px;left: 5px" @click="previousStep">上一步</Button>
+                    <Button v-if="this.currentStep<5" type="primary" style="position:absolute; bottom: 5px;left: 100px" @click="nextStep">下一步</Button>
+                  </div>
               </Layout>
           </Layout>
-        </Content>
+        </div>
       </Layout>
       <Footer class="layout-footer-center">2019-2020 &copy; ANANASAFT</Footer>
     </Layout>
@@ -25,14 +27,32 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import MyHeader from './components/Header.vue'
 import MySteps from './components/Steps'
+import SelectSensorFunction from "./components/SelectSensorFunction";
 export default {
   name: 'App',
   components: {
     MyHeader,
-    MySteps
+    MySteps,
+    SelectSensorFunction
+  },
+  data(){
+    return {
+      currentStep: 0
+    }
+  },
+  methods: {
+    previousStep() {
+      if(this.currentStep>0) {
+        this.currentStep -= 1
+      }
+    },
+    nextStep() {
+      if(this.currentStep<5) {
+        this.currentStep += 1
+      }
+    }
   }
 }
 </script>
