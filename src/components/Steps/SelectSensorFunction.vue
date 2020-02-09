@@ -57,9 +57,9 @@
         computed:{
 
         },
-        // props: {
-        //
-        // },
+        props: {
+
+        },
         methods: {
             getSelect(){
                 this.$emit('on-change');    //产生回调事件
