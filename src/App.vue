@@ -9,40 +9,57 @@
         <div :style="{padding: '24px', minHeight: '700px',maxHeight:'800px', background: '#fff'}">
           <Layout>
             <Sider hide-trigger :style="{background: '#fff'}">
-                <my-steps :current-step="currentStep"/>
+              <my-step-nav :current-step="currentStep"/>
             </Sider>
-              <Layout :style="{padding: '24px 24px'}">
-                  <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
-                      <select-sensor-function :style="{display:this.currentStep!=0?'none':'block'}"/>
-                    <Button v-if="this.currentStep>0" style="position:absolute; bottom: 5px;left: 5px" @click="previousStep">上一步</Button>
-                    <Button v-if="this.currentStep<5" type="primary" style="position:absolute; bottom: 5px;left: 100px" @click="nextStep">下一步</Button>
-                  </div>
-              </Layout>
+            <Layout :style="{padding: '24px 24px'}">
+              <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
+                <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>
+<!--                <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>-->
+                <Button v-if="this.currentStep>0" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
+                <Button v-if="this.currentStep<5" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
+              </div>
+            </Layout>
           </Layout>
         </div>
       </Layout>
-      <Footer class="layout-footer-center">2019-2020 &copy; ANANASAFT</Footer>
+      <Footer class="layout-footer-center">2020-2021 &copy; ANANASAFT</Footer>
     </Layout>
   </div>
 </template>
 
 <script>
 import MyHeader from './components/Header.vue'
-import MySteps from './components/Steps'
-import SelectSensorFunction from "./components/SelectSensorFunction";
+import MyStepNav from './components/StepNav'
+import SelectSensorFunction from "./components/Steps/SelectSensorFunction";
 export default {
   name: 'App',
   components: {
     MyHeader,
-    MySteps,
+    MyStepNav,
     SelectSensorFunction
   },
   data(){
     return {
-      currentStep: 0
+      currentStep: 0,
+      ifCanDoNext:false
     }
   },
   methods: {
+    ifEnableNextStep(){
+      switch (this.currentStep) {
+        case 0:
+          // console.log(this.$refs.step0.currentSelect)
+          if(this.$refs.sensorFunctionSelect.currentSelect!==-1){
+            this.ifCanDoNext = true;
+          }else {
+            this.ifCanDoNext = false;
+          }
+          break;
+      }
+    },
+    selectSensorFunctionChanged(){
+      this.ifEnableNextStep()
+    },
     previousStep() {
       if(this.currentStep>0) {
         this.currentStep -= 1
@@ -53,6 +70,9 @@ export default {
         this.currentStep += 1
       }
     }
+  },
+  mounted() {
+    this.ifEnableNextStep()
   }
 }
 </script>

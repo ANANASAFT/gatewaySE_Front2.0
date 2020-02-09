@@ -62,8 +62,7 @@
         // },
         methods: {
             getSelect(){
-                // console.log("3213213213")
-                console.log(this.currentSelect)
+                this.$emit('on-change');    //产生回调事件
             }
         }
     }
