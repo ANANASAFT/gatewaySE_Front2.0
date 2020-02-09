@@ -1,6 +1,6 @@
 <template>
     <div>
-        Sensor0Parameters
+        Sensor1Parameters
     </div>
 </template>
 

@@ -1,12 +1,12 @@
 <template>
     <div>
-        Sensor0Parameters
+        Sensor9Parameters
     </div>
 </template>
 
 <script>
     export default {
-        name: "Sensor0Parameters"
+        name: "Sensor9Parameters"
     }
 </script>
 

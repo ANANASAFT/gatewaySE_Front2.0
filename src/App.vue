@@ -14,7 +14,7 @@
             <Layout :style="{padding: '24px 24px'}">
               <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
                 <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>
-<!--                <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>-->
+                <select-sensor-parameters :sensor-type="this.$refs.sensorFunctionSelect.currentSelect"  ref="sensorParameter" :style="{display:this.currentStep!=1?'none':'block'}"/>
                 <Button v-if="this.currentStep>0" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
                 <Button v-if="this.currentStep<5" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
               </div>
@@ -31,12 +31,14 @@
 import MyHeader from './components/Header.vue'
 import MyStepNav from './components/StepNav'
 import SelectSensorFunction from "./components/Steps/SelectSensorFunction";
+import SelectSensorParameters from "./components/Steps/SelectSensorParameters";
 export default {
   name: 'App',
   components: {
     MyHeader,
     MyStepNav,
-    SelectSensorFunction
+    SelectSensorFunction,
+    SelectSensorParameters
   },
   data(){
     return {
