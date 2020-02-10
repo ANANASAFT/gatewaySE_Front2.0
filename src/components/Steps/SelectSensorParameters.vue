@@ -1,16 +1,16 @@
 <template>
-    <div>
-        <Sensor0Parameters v-if="this.SensorType==0"/>
-        <Sensor1Parameters v-if="this.SensorType==1"/>
-        <Sensor2Parameters v-if="this.SensorType==2"/>
-        <Sensor3Parameters v-if="this.SensorType==3"/>
-        <Sensor4Parameters v-if="this.SensorType==4"/>
-        <Sensor5Parameters v-if="this.SensorType==5"/>
-        <Sensor6Parameters v-if="this.SensorType==6"/>
-        <Sensor7Parameters v-if="this.SensorType==7"/>
-        <Sensor8Parameters v-if="this.SensorType==8"/>
-        <Sensor9Parameters v-if="this.SensorType==9"/>
-    </div>
+  <div>
+    <Sensor0Parameters v-if="this.SensorType==0"/>
+    <Sensor1Parameters v-if="this.SensorType==1"/>
+    <Sensor2Parameters v-if="this.SensorType==2"/>
+    <Sensor3Parameters v-if="this.SensorType==3"/>
+    <Sensor4Parameters v-if="this.SensorType==4"/>
+    <Sensor5Parameters v-if="this.SensorType==5"/>
+    <Sensor6Parameters v-if="this.SensorType==6"/>
+    <Sensor7Parameters v-if="this.SensorType==7"/>
+    <Sensor8Parameters v-if="this.SensorType==8"/>
+    <Sensor9Parameters v-if="this.SensorType==9"/>
+  </div>
 </template>
 
 <script>

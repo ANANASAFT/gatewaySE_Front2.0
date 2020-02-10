@@ -1,7 +1,7 @@
 <template>
-    <div>
-        Sensor8Parameters
-    </div>
+  <div>
+    Sensor8Parameters
+  </div>
 </template>
 
 <script>

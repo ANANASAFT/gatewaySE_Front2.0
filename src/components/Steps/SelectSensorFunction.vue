@@ -1,7 +1,7 @@
 <template>
-    <Select v-model="currentSelect" @on-change="getSelect" placeholder="选择需要的传感器功能" style="width:200px" >
-        <Option v-for="item in funcList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>
+  <Select v-model="currentSelect" @on-change="getSelect" placeholder="选择需要的传感器功能" style="width:200px" >
+    <Option v-for="item in funcList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+  </Select>
 </template>
 
 <script>

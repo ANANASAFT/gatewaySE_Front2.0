@@ -15,8 +15,13 @@
               <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
                 <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>
                 <SelectSensorParameters v-if="this.currentStep>=1" :sensor-type="$refs.sensorFunctionSelect.currentSelect" ref="sensorParametersSelect" :style="{display:this.currentStep!=1?'none':'block'}"/>
-                <Button v-if="this.currentStep>0" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
-                <Button v-if="this.currentStep<5" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
+                <SelectSensorWorkingEnvironment  v-if="this.currentStep>=2" :style="{display:this.currentStep!=2?'none':'block'}"/>
+                <SelectGatewayParameters  v-if="this.currentStep>=3" :style="{display:this.currentStep!=3?'none':'block'}"/>
+                <SelectGatewayWorkingEnvironment  v-if="this.currentStep>=4" ref="gatewayWorkingEnvSelect" :style="{display:this.currentStep!=4?'none':'block'}"/>
+
+                <Button v-if="this.currentStep>0&&this.currentStep<=4" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
+                <Button v-if="this.currentStep<=3" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
+                <Button v-if="this.currentStep==4"  type="primary"  :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="postGatewayParameters">完成</Button>
               </div>
             </Layout>
           </Layout>
@@ -32,18 +37,30 @@ import MyHeader from './components/Header.vue'
 import MyStepNav from './components/StepNav'
 import SelectSensorFunction from "./components/Steps/SelectSensorFunction";
 import SelectSensorParameters from "./components/Steps/SelectSensorParameters";
+import SelectSensorWorkingEnvironment from "./components/Steps/SelectSensorWorkingEnvironment";
+import SelectGatewayWorkingEnvironment from "./components/Steps/SelectGatewayWorkingEnvironment";
+import SelectGatewayParameters from "./components/Steps/SelectGatewayParameters";
 export default {
   name: 'App',
   components: {
     MyHeader,
     MyStepNav,
     SelectSensorFunction,
-    SelectSensorParameters
+    SelectSensorParameters,
+    SelectSensorWorkingEnvironment,
+    SelectGatewayWorkingEnvironment,
+    SelectGatewayParameters
   },
   data(){
     return {
       currentStep: 0,
-      ifCanDoNext:false
+      ifCanDoNext:false,
+      gatewayParameters:{
+          type:Object,
+          default(){
+              return null;
+          }
+      }
     }
   },
   methods: {
@@ -71,6 +88,30 @@ export default {
       if(this.currentStep<5) {
         this.currentStep += 1
       }
+    },
+    postGatewayParameters() {
+      this.$set(this.gatewayParameters,'current',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentValue))
+      this.$set(this.gatewayParameters,'temperatureLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureLow))
+      this.$set(this.gatewayParameters,'temperatureHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureHigh))
+      this.$set(this.gatewayParameters,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
+      this.$axios({
+          url: 'http://localhost:8081/api/test',
+          method: 'post',
+          //发送格式为json
+          data: JSON.stringify({
+            'temperatureLow':this.gatewayParameters.temperatureLow,
+            'temperatureHigh':this.gatewayParameters.temperatureHigh,
+            'current':this.gatewayParameters.current,
+            'industrial_grade':this.gatewayParameters.industrialGrade,
+          }),
+          headers:
+                 {
+                   'Content-Type': 'application/json'
+                 }
+      }).then(function (return_data) {
+          console.log(return_data)
+          // alert(return_data)
+      });
     }
   },
   mounted() {
