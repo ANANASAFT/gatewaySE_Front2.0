@@ -55,7 +55,7 @@ export default {
     return {
       currentStep: 0,
       ifCanDoNext:false,
-      gatewayParameters:{
+      gatewayWorkingEnv:{
           type:Object,
           default(){
               return null;
@@ -90,19 +90,16 @@ export default {
       }
     },
     postGatewayParameters() {
-      this.$set(this.gatewayParameters,'current',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentValue))
-      this.$set(this.gatewayParameters,'temperatureLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureLow))
-      this.$set(this.gatewayParameters,'temperatureHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureHigh))
-      this.$set(this.gatewayParameters,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
+      this.$set(this.gatewayWorkingEnv,'current',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentValue))
+      this.$set(this.gatewayWorkingEnv,'temperatureLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureLow))
+      this.$set(this.gatewayWorkingEnv,'temperatureHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureHigh))
+      this.$set(this.gatewayWorkingEnv,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
       this.$axios({
           url: 'http://localhost:8081/api/test',
           method: 'post',
           //发送格式为json
           data: JSON.stringify({
-            'temperatureLow':this.gatewayParameters.temperatureLow,
-            'temperatureHigh':this.gatewayParameters.temperatureHigh,
-            'current':this.gatewayParameters.current,
-            'industrial_grade':this.gatewayParameters.industrialGrade,
+
           }),
           headers:
                  {
