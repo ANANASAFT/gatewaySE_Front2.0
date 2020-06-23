@@ -1,118 +1,158 @@
 <template>
   <div class="layout" id="app">
-    <Layout>
-      <Header>
-        <MyHeader/>
-      </Header>
-      <Layout :style="{padding: '0 10px'}">
-<!--        <MyBreadcrumb/>-->
-        <div :style="{padding: '24px', minHeight: '700px',maxHeight:'800px', background: '#fff'}">
-          <Layout>
-            <Sider hide-trigger :style="{background: '#fff'}">
-              <my-step-nav :current-step="currentStep"/>
-            </Sider>
-            <Layout :style="{padding: '24px 24px'}">
-              <div :style="{padding: '24px', minHeight: '700px', background: '#fff',position:'relative'}">
-                <select-sensor-function @on-change="selectSensorFunctionChanged" ref="sensorFunctionSelect" :style="{display:this.currentStep!=0?'none':'block'}"/>
-                <SelectSensorParameters v-if="this.currentStep>=1" :sensor-type="$refs.sensorFunctionSelect.currentSelect" ref="sensorParametersSelect" :style="{display:this.currentStep!=1?'none':'block'}"/>
-                <SelectSensorWorkingEnvironment  v-if="this.currentStep>=2" :style="{display:this.currentStep!=2?'none':'block'}"/>
-                <SelectGatewayParameters  v-if="this.currentStep>=3" :style="{display:this.currentStep!=3?'none':'block'}"/>
-                <SelectGatewayWorkingEnvironment  v-if="this.currentStep>=4" ref="gatewayWorkingEnvSelect" :style="{display:this.currentStep!=4?'none':'block'}"/>
-
-                <Button v-if="this.currentStep>0&&this.currentStep<=4" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
-                <Button v-if="this.currentStep<=3" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
-                <Button v-if="this.currentStep==4"  type="primary"  :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="postGatewayParameters">完成</Button>
-              </div>
-            </Layout>
-          </Layout>
-        </div>
-      </Layout>
-      <Footer class="layout-footer-center">2020-2021 &copy; ANANASAFT</Footer>
-    </Layout>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import MyHeader from './components/Header.vue'
-import MyStepNav from './components/StepNav'
-import SelectSensorFunction from "./components/Steps/SelectSensorFunction";
-import SelectSensorParameters from "./components/Steps/SelectSensorParameters";
-import SelectSensorWorkingEnvironment from "./components/Steps/SelectSensorWorkingEnvironment";
-import SelectGatewayWorkingEnvironment from "./components/Steps/SelectGatewayWorkingEnvironment";
-import SelectGatewayParameters from "./components/Steps/SelectGatewayParameters";
+// import MyHeader from './components/Header.vue'
+// import MyStepNav from './components/StepNav'
+// import SelectSensorFunction from "./components/Steps/SelectSensorFunction";
+// import SelectSensorParameters from "./components/Steps/SelectSensorParameters";
+// import SelectSensorWorkingEnvironment from "./components/Steps/SelectSensorWorkingEnvironment";
+// import SelectGatewayWorkingEnvironment from "./components/Steps/SelectGatewayWorkingEnvironment";
+// import Index from "./components/IndexPage/index"
+// import GatewayCenter from "./components/GatewayCenter/gatewayManagement"
+// import SensorCenter from "./components/SensorCenter/sensorManagement"
+// import SelectGatewayParameters from "./components/Steps/SelectGatewayParameters";
 export default {
   name: 'App',
-  components: {
-    MyHeader,
-    MyStepNav,
-    SelectSensorFunction,
-    SelectSensorParameters,
-    SelectSensorWorkingEnvironment,
-    SelectGatewayWorkingEnvironment,
-    SelectGatewayParameters
-  },
-  data(){
-    return {
-      currentStep: 0,
-      ifCanDoNext:false,
-      gatewayWorkingEnv:{
-          type:Object,
-          default(){
-              return null;
-          }
-      }
-    }
-  },
-  methods: {
-    ifEnableNextStep(){
-      switch (this.currentStep) {
-        case 0:
-          // console.log(this.$refs.step0.currentSelect)
-          if(this.$refs.sensorFunctionSelect.currentSelect!==-1){
-            this.ifCanDoNext = true;
-          }else {
-            this.ifCanDoNext = false;
-          }
-          break;
-      }
+  // components: {
+  //   Index,
+  //   GatewayCenter,
+  //   SensorCenter,
+  //   MyStepNav,
+  //   SelectSensorFunction,
+  //   SelectSensorParameters,
+  //   SelectSensorWorkingEnvironment,
+  //   SelectGatewayWorkingEnvironment,
+  //   SelectGatewayParameters
+  // },
+  // data(){
+  //   return {
+  //     currentStep: 0,
+  //     ifCanDoNext:false,
+  //     mainpageNav:"0",
+  //     sensorParameters: {
+  //       type:Object,
+  //       default(){
+  //           return null;
+  //       }
+  //     },
+  //     sensorWorkingEnv:{
+  //         type:Object,
+  //         default(){
+  //             return null;
+  //         }
+  //     },
+  //     gatewayWorkingEnv:{
+  //         type:Object,
+  //         default(){
+  //             return null;
+  //         }
+  //     },
+  //   }
+  // },
+  // methods: {
+  //   changeMainpage(value){
+  //     this.mainpageNav = value
+  //   },
+  //   ifEnableNextStep(){
+  //     switch (this.currentStep) {
+  //       case 0:
+  //         // console.log(this.$refs.step0.currentSelect)
+  //         if(this.$refs.sensorFunctionSelect.sensorFuncSelect!==-1){
+  //           this.ifCanDoNext = true;
+  //         }else {
+  //           this.ifCanDoNext = false;
+  //         }
+  //         break;
+  //     }
+  //   },
+  //   selectSensorFunctionChanged(){
+  //     this.ifEnableNextStep()
+  //   },
+  //   previousStep() {
+  //     if(this.currentStep>0) {
+  //       this.currentStep -= 1
+  //     }
+  //   },
+  //   nextStep() {
+  //     if(this.currentStep<5) {
+  //       this.currentStep += 1
+  //     }
+  //   },
+  //   setSensorFunc(){
+  //       this.$set(this.sensorParameters,'sensorFunc',this.$refs.sensorFunctionSelect.sensorFuncSelect)
+  //   },
+  //   setSensorParameters(){
+  //     var sensorType = this.$refs.sensorFunctionSelect.sensorFuncSelect
+  //     switch (sensorType) {
+  //       case 0:
+  //         this.$set(this.sensorParameters,'InterfaceProtocolSelect',this.$refs.sensorParametersSelect.$refs.sensor0.sensorProtocolSelectList)
+  //         this.$set(this.sensorParameters,'transmittingPorts',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.transmittingPorts))
+  //         this.$set(this.sensorParameters,'receivingPorts',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.receivingPorts))
+  //         this.$set(this.sensorParameters,'frequencyLow',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.frequencyLow))
+  //         this.$set(this.sensorParameters,'frequencyHigh',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.frequencyHigh))
+  //         this.$set(this.sensorParameters,'powerLow',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.powerLow))
+  //         this.$set(this.sensorParameters,'powerHigh',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.powerHigh))
+  //         this.$set(this.sensorParameters,'noiseLow',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.noiseLow))
+  //         this.$set(this.sensorParameters,'noiseHigh',parseFloat(this.$refs.sensorParametersSelect.$refs.sensor0.noiseHigh))
+  //         break
+  //     }
+  //   },
+  //   setSensorWorkingEnv(){
+  //     this.$set(this.sensorWorkingEnv,'currentLow',parseFloat(this.$refs.sensorWorkingEnvSelect.currentLow))
+  //     this.$set(this.sensorWorkingEnv,'currentHigh',parseFloat(this.$refs.sensorWorkingEnvSelect.currentHigh))
+  //     this.$set(this.sensorWorkingEnv,'temperatureLow',parseFloat(this.$refs.sensorWorkingEnvSelect.temperatureLow))
+  //     this.$set(this.sensorWorkingEnv,'temperatureHigh',parseFloat(this.$refs.sensorWorkingEnvSelect.temperatureHigh))
+  //     this.$set(this.sensorWorkingEnv,'voltageLow',parseFloat(this.$refs.sensorWorkingEnvSelect.voltageLow))
+  //     this.$set(this.sensorWorkingEnv,'voltageHigh',parseFloat(this.$refs.sensorWorkingEnvSelect.voltageHigh))
+  //     this.$set(this.sensorWorkingEnv,'frequencyLow',parseFloat(this.$refs.sensorWorkingEnvSelect.frequencyLow))
+  //     this.$set(this.sensorWorkingEnv,'frequencyHigh',parseFloat(this.$refs.sensorWorkingEnvSelect.frequencyHigh))
+  //     this.$set(this.sensorWorkingEnv,'industrialGrade',this.$refs.sensorWorkingEnvSelect.industrialGradeSelect)
+  //   },
+  //   // setGatewayParameters(){
+  //   //
+  //   // },
+  //   setGatewayWorkingEnv(){
+  //     this.$set(this.gatewayWorkingEnv,'currentLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentLow))
+  //     this.$set(this.gatewayWorkingEnv,'currentHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentHigh))
+  //     this.$set(this.gatewayWorkingEnv,'temperatureLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureLow))
+  //     this.$set(this.gatewayWorkingEnv,'temperatureHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureHigh))
+  //     this.$set(this.gatewayWorkingEnv,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
+  //   },
+  //   post() {
+  //     this.setSensorFunc()
+  //     this.setSensorParameters()
+  //     this.setSensorWorkingEnv()
+  //     // this.setGatewayParameters()
+  //     this.setGatewayWorkingEnv()
+  //     this.$axios({
+  //         url: 'http://localhost:8081/api/test',
+  //         method: 'post',
+  //         //发送格式为json
+  //         data: JSON.stringify({
+  //             // 'test':'123213',
+  //             'sensorParameters':this.sensorParameters,
+  //             'gatewayWorkingEnv':this.gatewayWorkingEnv,
+  //             'sensorWorkingEnv':this.sensorWorkingEnv
+  //         }),
+  //         headers:
+  //                {
+  //                  'Content-Type': 'application/json'
+  //                }
+  //     }).then(function (return_data) {
+  //         console.log(return_data)
+  //         // alert(return_data)
+  //     });
+  //   }
+  // },
+    methods:{
     },
-    selectSensorFunctionChanged(){
-      this.ifEnableNextStep()
-    },
-    previousStep() {
-      if(this.currentStep>0) {
-        this.currentStep -= 1
-      }
-    },
-    nextStep() {
-      if(this.currentStep<5) {
-        this.currentStep += 1
-      }
-    },
-    postGatewayParameters() {
-      this.$set(this.gatewayWorkingEnv,'current',parseFloat(this.$refs.gatewayWorkingEnvSelect.currentValue))
-      this.$set(this.gatewayWorkingEnv,'temperatureLow',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureLow))
-      this.$set(this.gatewayWorkingEnv,'temperatureHigh',parseFloat(this.$refs.gatewayWorkingEnvSelect.temperatureHigh))
-      this.$set(this.gatewayWorkingEnv,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
-      this.$axios({
-          url: 'http://localhost:8081/api/test',
-          method: 'post',
-          //发送格式为json
-          data: JSON.stringify({
-
-          }),
-          headers:
-                 {
-                   'Content-Type': 'application/json'
-                 }
-      }).then(function (return_data) {
-          console.log(return_data)
-          // alert(return_data)
-      });
-    }
-  },
   mounted() {
-    this.ifEnableNextStep()
+    // this.ifEnableNextStep()
+    //   this.getCookie();
   }
 }
 </script>

@@ -7,14 +7,14 @@
     <Step :title="currentStep>2?this.stepTitles[0]:
                         currentStep<2?this.stepTitles[2]:this.stepTitles[1]"
           content="传感器工作环境"></Step>
+<!--    <Step :title="currentStep>3?this.stepTitles[0]:-->
+<!--                        currentStep<3?this.stepTitles[2]:this.stepTitles[1]"-->
+<!--          content="网关参数"></Step>-->
     <Step :title="currentStep>3?this.stepTitles[0]:
                         currentStep<3?this.stepTitles[2]:this.stepTitles[1]"
-          content="网关参数"></Step>
+          content="网关工作环境"></Step>
     <Step :title="currentStep>4?this.stepTitles[0]:
                         currentStep<4?this.stepTitles[2]:this.stepTitles[1]"
-          content="网关工作环境"></Step>
-    <Step :title="currentStep>5?this.stepTitles[0]:
-                        currentStep<5?this.stepTitles[2]:this.stepTitles[1]"
           content="方案选择"></Step>
   </Steps>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <Select v-model="currentSelect" @on-change="getSelect" placeholder="选择需要的传感器功能" style="width:200px" >
+  <Select v-model="sensorFuncSelect" @on-change="getSelect" placeholder="选择需要的传感器功能" style="width:200px" >
     <Option v-for="item in funcList" :value="item.value" :key="item.value">{{ item.label }}</Option>
   </Select>
 </template>
@@ -51,7 +51,7 @@
                         label: '压力传感器'
                     },
                 ],
-                currentSelect: -1
+                sensorFuncSelect: -1
             }
         },
         computed:{
@@ -62,7 +62,7 @@
         },
         methods: {
             getSelect(){
-                this.$emit('on-change');    //产生回调事件
+                this.$emit('on-change',this.sensorFuncSelect);    //产生回调事件
             }
         }
     }

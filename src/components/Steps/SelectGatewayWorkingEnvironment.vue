@@ -23,7 +23,9 @@
       <i-col span="6">
         <div>
           工作电流：
-          <Input v-model="currentValue" type="number" placeholder="工作电流" style="width: 100px" />
+          <Input v-model="currentLow" type="number" placeholder="最低电流" style="width: 100px" />
+          mA~
+          <Input v-model="currentHigh" type="number" placeholder="最高电流" style="width: 100px" />
           mA
         </div>
       </i-col>
@@ -76,7 +78,8 @@
                 industrialGradeSelect: -1,
                 // voltageHigh:'',
                 // voltageLow:'',
-                currentValue:'',
+                currentLow:'',
+                currentHigh:'',
                 temperatureLow:'',
                 temperatureHigh:'',
                 // frequencyLow:'',

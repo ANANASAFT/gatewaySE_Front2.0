@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p style=" font-size: 15px;">参数一量程范围：</p>
+        <p style=" font-size: 15px;">量程范围：</p>
         <Select  @on-change="getSelect" placeholder="选择量程范围" style="width:200px " >
             <Option>分辨率：1~10000</Option>
             <Option>开关点SP [Hz]：-166.6~166.7</Option>
