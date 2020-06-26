@@ -37,7 +37,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from,next) => {
-  // console.log("isLogin",store.state.isLogin)
+  console.log("isLogin",store.state.isLogin)
   if(to.matched.some( m => m.meta.auth)){
     // 对路由进行验证
     if(validateUsrCookie()) { // 已经登陆

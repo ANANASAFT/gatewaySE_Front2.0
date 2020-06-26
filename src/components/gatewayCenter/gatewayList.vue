@@ -5,7 +5,7 @@
                 v-for="(product,index) in productList"
                 :key = index
       >
-        <ListItemMeta avatar="https://www.baimatech.com/upfile/2020/1584610100984.png" :title="product.product_name" :description="product.description" />
+        <ListItemMeta avatar="https://www.baimatech.com/upfile/2020/1584610100984.png" :title="product.model" :description="product.description" />
         <template slot="action">
           <li>
             <a @click="showProductInfo(product)">查看详情</a>
@@ -24,12 +24,17 @@
       <p :style="{fontSize:'20px'}">{{productInfo.description}}</p>
       <Divider/>
       <Row>
-          工业等级: 消费级
+        <i-col span="12">
+          品牌: {{productInfo.brand}}
+        </i-col>
+        <i-col span="12">
+          工业等级: {{productInfo.industrialGrade}}
+        </i-col>
       </Row>
       <br>
       <Row>
         <i-col span="12">
-          工作温度: {{productInfo.param1}}
+          工作温度: {{productInfo.temperatureLow}} °C ~ {{productInfo.temperatureHigh}} °C
         </i-col>
         <i-col span="12">
           工作电流: {{productInfo.param2}}
@@ -67,10 +72,15 @@
         methods:{
             showProductInfo(product){
                 this.productModal = true
-                this.productInfo.name = product.product_name;
+                if(product.industrialGrade==0)
+                  this.productInfo.industrialGrade = "工业普通级"
+                if(product.industrialGrade==1)
+                    this.productInfo.industrialGrade = "工业严苛级"
+                this.productInfo.name = product.model;
+                this.productInfo.brand = product.brand;
                 this.productInfo.description = product.description;
-                this.productInfo.param1 = product.param1;
-                this.productInfo.param2 = product.param2;
+                this.productInfo.temperatureHigh = product.temperatureHigh;
+                this.productInfo.temperatureLow = product.temperatureLow;
             },
             ok () {
                 this.$Message.info('Clicked ok');
@@ -81,7 +91,7 @@
             getProduct(page){
                 var _this = this
                 this.$axios({
-                    url: 'http://localhost:8081/api/get_gateway_test',
+                    url: 'http://localhost:8081/api//gateway/all/'+ page,
                     method: 'post',
                     //发送格式为json
                     data: JSON.stringify({
@@ -94,12 +104,8 @@
                 }).then(function (return_data) {
                     var retList = return_data.data.data
                     if(retList != null){
-                        // console.log("retList",retList)
+                        console.log("retList",retList)
                         _this.productList = retList
-                        // component.$Message.info('登录成功');
-                        // // _this.$store.commit("changeLogin",1)
-                        // setUsrCookie(component.usr_account,component.usr_password,1)
-                        // component.$router.push("/home")
                     }else {
                         // component.$Message.info('用户名或密码错误');
                         // component.loginModal = true;

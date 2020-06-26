@@ -3,6 +3,7 @@ export function setUsrCookie(usr_name, usr_pwd, exdays) {
     var exdate = new Date(); //获取时间
     exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
     //字符串拼接cookie
+    // console.log("setcookie",'setcookie')
     window.document.cookie = "userName" + "=" + usr_name + ";path=/;expires=" + exdate.toGMTString();
     window.document.cookie = "userPwd" + "=" + usr_pwd + ";path=/;expires=" + exdate.toGMTString();
 }
@@ -28,7 +29,7 @@ export function validateUsrCookie() {
     var usr_pwd = null
     if (document.cookie.length > 0) {
         var arr = document.cookie.split(';'); //这里显示的格式需要切割一下自己可输出看下
-        // console.log("cookie",document.cookie)
+        console.log("cookie",document.cookie)
         for (var i = 0; i < arr.length; i++) {
             // console.log("arr",arr)
             var arr2 = arr[i].split('='); //再次切割

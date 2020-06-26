@@ -57,9 +57,11 @@
                   <SelectSensorWorkingEnvironment  v-if="this.currentStep>=2" ref="sensorWorkingEnvSelect" :style="{display:this.currentStep!=2?'none':'block'}"/>
                   <!--                <SelectGatewayParameters  v-if="this.currentStep>=3" :style="{display:this.currentStep!=3?'none':'block'}"/>-->
                   <SelectGatewayWorkingEnvironment  v-if="this.currentStep>=3" ref="gatewayWorkingEnvSelect" :style="{display:this.currentStep!=3?'none':'block'}"/>
+                  <SolutionList  v-if="this.currentStep==4" :solution-list="solutionList" :style="{display:this.currentStep!=4?'none':'block'}"/>
                   <Button v-if="this.currentStep>0&&this.currentStep<=3" :style="{position:'absolute', bottom: '5px' ,left: '5px'}" @click="previousStep">上一步</Button>
                   <Button v-if="this.currentStep<=2" type="primary" :disabled="!ifCanDoNext" :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="nextStep">下一步</Button>
                   <Button v-if="this.currentStep==3"  type="primary"  :style="{position:'absolute', bottom: '5px',left: '100px'}" @click="post">完成</Button>
+                  <Button v-if="this.currentStep==4"  type="primary"  :style="{position:'absolute', bottom: '5px'}" @click="go_back">返回</Button>
                 </div>
               </Layout>
             </Layout>
@@ -77,6 +79,7 @@
 <script>
     var _this = {}
     // import Index from "../IndexPage/index";
+    import SolutionList from "../SolutionCenter/SolutionList";
     import GatewayCenter from "../GatewayCenter/gatewayManagement";
     import SensorCenter from "../SensorCenter/sensorManagement";
     import UsrCenter from "../UsrCenter/UsrManagement";
@@ -91,6 +94,7 @@
     export default {
         name: 'UsrHome',
         components: {
+            SolutionList,
             GatewayCenter,
             SensorCenter,
             UsrCenter,
@@ -125,6 +129,7 @@
                         return null;
                     }
                 },
+                solutionList: []
             }
         },
         methods: {
@@ -198,13 +203,14 @@
                 this.$set(this.gatewayWorkingEnv,'industrialGrade',this.$refs.gatewayWorkingEnvSelect.industrialGradeSelect)
             },
             post() {
+                _this = this
                 this.setSensorFunc()
                 this.setSensorParameters()
                 this.setSensorWorkingEnv()
                 // this.setGatewayParameters()
                 this.setGatewayWorkingEnv()
                 this.$axios({
-                    url: 'http://localhost:8081/api/test',
+                    url: 'http://localhost:8081/api/solution',
                     method: 'post',
                     //发送格式为json
                     data: JSON.stringify({
@@ -220,8 +226,18 @@
                 }).then(function (return_data) {
                     console.log(return_data)
                     // alert(return_data)
+                    _this.solutionList = return_data.data.data
                 });
-            }
+                // for(var i = 0;i<5;i++) {
+                //     var solution
+                //     this.solutionList.push(solution)
+                // }
+                this.currentStep+=1
+            },
+            go_back(){
+              this.currentStep = 0
+              this.solutionList = []
+            },
         },
         beforeCreate() {
             getUsrCookie()

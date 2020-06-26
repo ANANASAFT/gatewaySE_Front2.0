@@ -3,12 +3,12 @@
     <Layout :style="{padding: '60px 0px',height:'100vh',background: '#fff',fontSize:'20px',textAlign:'center'}">
       <Row type="flex" :style="{marginLeft: 'auto',marginRight: 'auto'}">
         <i-col span="12">用户名:</i-col>
-        <i-col span="12"><i-input style="width: 300px" readonly value = "usr_account"></i-input></i-col>
+        <i-col span="12"><i-input style="width: 300px" readonly value = "admin"></i-input></i-col>
       </Row>
       <br>
       <Row type="flex" :style="{marginLeft: 'auto',marginRight: 'auto'}">
         <i-col span="12">邮箱:</i-col>
-        <i-col span="12"><i-input style="width: 300px" readonly value = "usr_e-mail"></i-input></i-col>
+        <i-col span="12"><i-input style="width: 300px" readonly value = "admin@ananasaft.c"></i-input></i-col>
       </Row>
       <br>
       <Row type="flex" :style="{marginTop:'15%'}">

@@ -35,6 +35,7 @@
                 v-model="loginModal"
                 class-name="vertical-center-modal"
                 @on-ok="login"
+                @on-cancel="cancel_login"
         >
           <div :style="{textAlign:'center'}">
             <Row :style="{marginLeft: 'auto',marginRight: 'auto'}">
@@ -133,8 +134,15 @@
                     }else {
                         component.$Message.info('用户名或密码错误');
                         component.loginModal = true;
+                        this.usr_password = ''
+                        this.usr_account = ''
                     }
                 });
+
+            },
+            cancel_login(){
+                this.usr_password = ''
+                this.usr_account = ''
             },
             register(){
                 this.$Message.info('注册成功');

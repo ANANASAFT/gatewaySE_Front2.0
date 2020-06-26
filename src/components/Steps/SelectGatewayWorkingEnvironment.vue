@@ -20,7 +20,7 @@
 <!--          VDC-->
 <!--        </div>-->
 <!--      </i-col>-->
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作电流：
           <Input v-model="currentLow" type="number" placeholder="最低电流" style="width: 100px" />
@@ -32,7 +32,7 @@
     </Row>
     <br>
     <Row>
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作温度：
           <Input v-model="temperatureLow" type="number" placeholder="最低温度" style="width: 100px" />

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row :gutter="16">
-      <i-Col span="6">
+      <i-Col span="12">
         工业等级：
         <Select v-model="industrialGradeSelect" placeholder="选择工业等级" style="width:200px" >
           <Option v-for="item in industrialGradeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -10,7 +10,7 @@
     </Row>
     <br>
     <Row>
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作电压：
           <Input v-model="voltageLow" type="number" placeholder="最低电压" style="width: 100px" />
@@ -20,7 +20,7 @@
           VDC
         </div>
       </i-col>
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作电流：
           <Input v-model="currentLow" type="number" placeholder="最低电流" style="width: 100px" />
@@ -32,7 +32,7 @@
     </Row>
     <br>
     <Row>
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作温度：
           <Input v-model="temperatureLow" type="number" placeholder="最低温度" style="width: 100px" />
@@ -42,7 +42,7 @@
           °C
         </div>
       </i-col>
-      <i-col span="6">
+      <i-col span="12">
         <div>
           工作频率：
           <Input v-model="frequencyLow" type="number" placeholder="最低频率" style="width: 100px" />
