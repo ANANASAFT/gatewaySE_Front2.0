@@ -27,7 +27,8 @@
             <SelectSensorParameters :sensor-type="sensorType"/>
             <SelectSensorWorkingEnvironment/>
           </Modal>
-          <sensor-list/>
+          <sensor-list ref="sensorList"/>
+          <Page :current = "this.sensorListPage" :page-size="6" :total="50" simple @on-change="changeListPage" :style="{position:'absolute', bottom: '5px',left:'40%'}"/>
         </div>
         <div :style="{display:this.pageNav==2?'block':'none'}">
           <favSensorList/>
@@ -57,7 +58,8 @@
             return {
                 filter: false,
                 sensorType:-1,
-                pageNav:1
+                pageNav:1,
+                sensorListPage:1
             }
         },
         methods: {
@@ -72,6 +74,10 @@
             },
             changePage(value){
                 this.pageNav = value
+            },
+            changeListPage(value){
+                this.sensorListPage = value
+                this.$refs.sensorList.getProduct(this.sensorListPage)
             }
         }
     }

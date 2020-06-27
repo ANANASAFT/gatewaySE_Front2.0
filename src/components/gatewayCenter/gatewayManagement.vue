@@ -25,7 +25,7 @@
               <SelectGatewayWorkingEnvironment/>
             </Modal>
             <gateway-list ref="gatewayList"/>
-            <Page :current = "this.gatewayListPage" :total="50" simple @on-change="changeListPage" :style="{position:'absolute', bottom: '5px',left:'40%'}"/>
+            <Page :current = "this.gatewayListPage" :page-size="6" :total="50" simple @on-change="changeListPage" :style="{position:'absolute', bottom: '5px',left:'40%'}"/>
         </div>
         <div :style="{display:this.pageNav==2?'block':'none'}">
           <favGatewayList/>
